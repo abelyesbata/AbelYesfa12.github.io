@@ -1,57 +1,428 @@
+ Mulugeta, [12/10/2025 10:30 PM]
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <!---=====css files ====-->
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/skins/colors-1.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Abel Yesfa | Web Developer & Designer</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Noto+Sans+Ethiopic:wght@400;700&display=swap" rel="stylesheet"/>
+  
+  <style>
+    :root {
+      --primary: #00eeff;
+      --secondary: #00ff88;
+      --dark: #0a0a1f;
+      --card-bg: rgba(255,255,255,0.08);
+      --text: #e0f7ff;
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ==================== FIXED HEADER - NO OVERLAP ==================== */
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      background: rgba(10,10,31,0.95);
+      backdrop-filter: blur(15px);
+      padding: 1rem 2rem;
+      z-index: 1000;
+      border-bottom: 3px solid var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;   /* Name left, menu center, nothing overlaps */
+    }
+
+    .logo-name {
+      font-size: clamp(1.6rem, 4vw, 2.2rem);
+      font-weight: 700;
+      color: var(--primary);
+      text-shadow: 0 0 20px var(--primary);
+      white-space: nowrap;
+    }
+
+    nav ul {
+      display: flex;
+      gap: clamp(1rem, 3vw, 2.5rem);
+      list-style: none;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      padding: 0.7rem 1.6rem;
+      border-radius: 50px;
+      font-size: clamp(0.9rem, 2vw, 1.1rem);
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    nav a::before {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%;
+      width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(0,238,255,0.4), transparent);
+      transition: 0.7s;
+    }
+    nav a:hover::before { left: 100%; }
+    nav a:hover, nav a.active {
+      background: var(--primary);
+      color: #000;
+      transform: translateY(-5px);
+      box-shadow: 0 12px 30px rgba(0,238,255,0.5);
+    }
+
+    main {
+      padding-top: 120px;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    /* ==================== SECTION TITLES & ANIMATIONS ==================== */
+    .section-title {
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      text-align: center;
+      margin: 4rem 0 3rem;
+      color: var(--primary);
+      position: relative;
+      opacity: 0;
+      transform: translateY(50px);
+      transition: all 1.2s ease-out;
+    }
+    .section-title.visible { opacity: 1; transform: translateY(0); }
+    .section-title::after {
+      content: '';
+      display: block;
+      width: 120px;
+      height: 6px;
+      background: var(--secondary);
+      margin: 1.5rem auto;
+      border-radius: 10px;
+      box-shadow: 0 0 25px var(--secondary);
+    }
+
+    .fade-up {
+      opacity: 0;
+      transform: translateY(70px);
+      transition: all 1.4s ease-out;
+    }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+    .full-photo {
+      width: 100%;
+      max-width: 420px;
+      border-radius: 50%;
+      border: 8px solid var(--primary);
+      box-shadow: 0 0 60px rgba(0,238,255,0.6);
+      display: block;
+      margin: 3rem auto;
+      transition: all 0.8s ease;
+    }
+    .full-photo:hover { transform: scale(1.08); }
+
+Mulugeta, [12/10/2025 10:30 PM]
+.card {
+      background: var(--card-bg);
+      backdrop-filter: blur(15px);
+      border-radius: 25px;
+      padding: 2.5rem;
+      margin: 2rem 0;
+      border: 2px solid rgba(0,238,255,0.3);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+      transition: all 0.6s ease;
+    }
+    .card:hover {
+      transform: translateY(-20px) scale(1.03);
+      border-color: var(--primary);
+      box-shadow: 0 30px 80px rgba(0,238,255,0.4);
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2.5rem;
+      margin-top: 3rem;
+    }
+
+    /* Skills */
+    .skill-item { margin: 1.8rem 0; }
+    .skill-name {
+      display: flex; justify-content: space-between;
+      color: var(--primary); font-weight: 600; font-size: 1.1rem; margin-bottom: 0.8rem;
+    }
+    .progress-bar {
+      height: 16px; background: rgba(255,255,255,0.1);
+      border-radius: 12px; overflow: hidden;
+      box-shadow: inset 0 0 15px rgba(0,0,0,0.4);
+    }
+    .progress {
+      height: 100%; width: 0;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      border-radius: 12px; position: relative; overflow: hidden;
+      transition: width 2.5s ease;
+    }
+    .progress::after {
+      content: ''; position: absolute; top: 0; left: -100%;
+      width: 60%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
+      animation: glow 2s infinite;
+    }
+    @keyframes glow { 0% { left: -100%; } 100% { left: 100%; } }
+
+    /* Services */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+    .service-card {
+      background: rgba(0,255,136,0.1);
+      padding: 3rem 2rem;
+      text-align: center;
+      border-radius: 25px;
+      border: 3px dashed var(--secondary);
+      transition: all 0.6s ease;
+      color: white;
+    }
+    .service-card:hover {
+      background: rgba(0,255,136,0.25);
+      border-style: solid;
+      transform: translateY(-25px) rotate(5deg) scale(1.05);
+      box-shadow: 0 20px 50px rgba(0,255,136,0.4);
+    }
+    .service-card i {
+      font-size: 4.5rem;
+      color: var(--secondary);
+      margin-bottom: 1.5rem;
+      transition: all 0.6s;
+    }
+    .service-card:hover i { transform: scale(1.4) rotate(360deg); color: white; }
+
+    /* Contact Form */
+    .contact-form {
+      max-width: 800px;
+      margin: 4rem auto;
+      padding: 3.5rem;
+      background: rgba(0,0,0,0.6);
+      border-radius: 30px;
+      border: 4px solid var(--primary);
+      box-shadow: 0 0 70px rgba(0,238,255,0.4);
+    }
+    .form-group { margin-bottom: 2rem; }
+    .form-group input, .form-group textarea {
+      width: 100%; padding: 1.3rem; border: none; border-radius: 18px;
+      background: rgba(255,255,255,0.12); color: white; font-size: 1.1rem;
+      transition: all 0.4s;
+    }
+    .form-group input:focus, .form-group textarea:focus {
+      outline: none; background: rgba(0,238,255,0.2);
+      box-shadow: 0 0 25px rgba(0,238,255,0.6); transform: scale(1.02);
+    }
+    .submit-btn {
+      background: linear-gradient(45deg, var(--primary), var(--secondary));
+      color: #000; padding: 1.3rem 4rem; border: none;
+      border-radius: 50px; font-weight: 700; font-size: 1.3rem;
+      cursor: pointer; transition: all 0.5s; width: 100%; margin-top: 1rem;
+    }
+    .submit-btn:hover {
+      background: white; transform: translateY(-8px) scale(1.05);
+      box-shadow: 0 20px 40px rgba(0,238,255,0.6);
+    }
+
+    footer {
+      text-align: center;
+      padding: 5rem 2rem;
+      background: rgba(0,0,0,0.9);
+      margin-top: 8rem;
+      border-top: 4px solid var(--primary);
+    }
+    .social-links {
+      display: flex; justify-content: center; gap: 3.5rem; margin: 2.5rem 0; flex-wrap: wrap;
+    }
+    .social-item a {
+      color: white;
+      font-size: clamp(2.5rem, 6vw, 3.5rem);
+      transition: all 0.5s;
+    }
+    .social-item a:hover {
+      color: var(--primary);
+      transform: translateY(-15px) scale(1.5);
+    }
+
+Mulugeta, [12/10/2025 10:30 PM]
+/* ==================== MOBILE RESPONSIVE ==================== */
+    @media (max-width: 992px) {
+      header { padding: 1rem; flex-direction: column; text-align: center; }
+      .logo-name { margin-bottom: 1rem; }
+      nav ul { gap: 1rem; }
+    }
+    @media (max-width: 600px) {
+      main { padding-top: 160px; padding-left: 1rem; padding-right: 1rem; }
+      .full-photo { max-width: 300px; }
+    }
+  </style>
 </head>
 <body>
-    <!-- ==== main container start====-->
-     <div class="main-container">
-    <!-- ==== aside start====-->
-     <div class="aside">
-     <div class="logo">
-        <a href="#"><span>A</span>bels</a>
-     </div>
-     <div class="nav-toggler">
-        <span></span>
-     </div>
-     <ul class="nav">
-        <li><a href="#" class="active"><i class="fa fa-home"></i>Home</a></li>
-       <li><a href="#"><i class="fa fa user"></i>About</a></li>
-       <li><a href="#"><i class="fa fa-list"></i>Services</a></li>
-       <li><a href="#"><i class="fa fa-briefcase"></i>Portfolio</a></li>
-       <li><a href="#"><i class="fa fa-comments"></i>contact</a></li>
-     </ul>
-     </div>
-      <!-- ==== aside end ====-->
-        <!-- ==== main container start====-->
-         <div class="main-content">
-             <!-- ==== home section start===-->
-              <section class="home section">
-                <div class="container">
-                    <div class="row">
-                        <div class="home-info padd-15">
-                           <h3 class="hello">Hello,my name is <span class="name">Abel Yesfa</span></h3> 
-                           <h3 class="my-proffession">I'm a <span class="typing">web designer</span></h3>
-                           <p>I'm a web designer with expensive experience for over some year.My expertise is to create and website design,graphics design and I think many more... </p>
-                           <a href="#contact" class="btn hire-me">Hire Me</a>
-                        </div>
-                        <div class="home-img padd-15">
-                            <img src="images/Abels.jpg" alt="">
-                        </div>
-                    </div>
-                </div>
-              </section>
-               <!-- ==== home section end====-->
-         </div>
 
-     </div>
-    <script src="js/script.js"></script>
+  <header>
+    <div class="logo-name">Abel Yesfa</div>
+    <nav>
+      <ul>
+        <li><a href="#home" class="active">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#portfolio">Portfolio</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Rest of your content (same as before) -->
+  <main>
+    <section id="home">
+      <h1 class="section-title">Abel Yesfa</h1>
+      <p style="text-align:center; font-size:clamp(1.3rem,4vw,1.8rem); color:var(--primary); margin:2rem 0;">
+        Computer Science Student  website developer
+      </p>
+      <img src="images/Abels.jpg" alt="Abel Yesfa" class="full-photo fade-up">
+      <p class="fade-up" style="text-align:center; font-size:1.2rem; max-width:900px; margin:2rem auto;">
+        My name is <strong>Abel Yesfa</strong>, I was born in Gurage Zone, South Ethiopia. 
+        I completed my education there and in 2015 E.C joined <strong>Wolkite University</strong>. 
+        Currently, I'm a <strong>3rd year Computer Science student</strong> passionate about creating beautiful and functional digital experiences.
+      </p>
+    </section>
+
+    <section id="about">
+      <h2 class="section-title">About Me</h2>
+      <div class="card fade-up">
+        <p style="text-align:center; font-size:1.3rem; line-height:2; color:var(--secondary);">
+          <strong>Creative Web Developer & Designer</strong><br>
+          I love clean code, modern design, and building solutions that make a difference.
+        </p>
+        <div class="info-grid">
+          <div>
+            <h3 style="color:var(--primary); margin-bottom:1.5rem; font-size:1.5rem;">Personal Info</h3>
+            <p><strong>Birthday:</strong> 08 July 2003</p>
+            <p><strong>Age:</strong> 22</p>
+            <p><strong>Email:</strong> abelyesfa5@gmail.com</p>
+            <p><strong>Phone:</strong> +251 994 296 025</p>
+            <p><strong>City:</strong> Hossana, Ethiopia</p>
+            <p><strong>Freelance:</strong> <span style="color:#00ff00; font-weight:bold;">Available</span></p>
+          </div>
+          <div>
+            <h3 style="color:var(--primary); margin-bottom:1.5rem; font-size:1.5rem;">Technical Skills</h3>
+            <div class="skill-item"><div class="skill-name">HTML <span>90%</span></div><div class="progress-bar"><div class="progress" style="width:90%"></div></div></div>
+            <div class="skill-item"><div class="skill-name">CSS <span>85%</span></div><div class="progress-bar"><div class="progress" style="width:85%"></div></div></div>
+            <div class="skill-item"><div class="skill-name">JavaScript <span>75%</span></div><div class="progress-bar"><div class="progress" style="width:75%"></div></div></div>
+            <div class="skill-item"><div class="skill-name">PHP <span>65%</span></div><div class="progress-bar"><div class="progress" style="width:65%"></div></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+Mulugeta, [12/10/2025 10:30 PM]
+<section id="services">
+      <h2 class="section-title">My Services</h2>
+      <div class="services-grid">
+        <div class="service-card fade-up">
+          <i class="fa fa-laptop-code"></i>
+          <h3>Web Development</h3>
+          <p>Fast, secure, and responsive websites built with modern technologies</p>
+        </div>
+        <div class="service-card fade-up">
+          <i class="fa fa-palette"></i>
+          <h3>UI/UX Design</h3>
+          <p>Beautiful, intuitive designs that users love</p>
+        </div>
+        <div class="service-card fade-up">
+          <i class="fa fa-mobile-alt"></i>
+          <h3>Responsive Design</h3>
+          <p>Flawless experience on phones, tablets, and desktops</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="portfolio">
+      <h2 class="section-title">Portfolio</h2>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:2.5rem;">
+        <div class="card fade-up">
+          <img src="images/project1.jpg" alt="Project" style="width:100%; border-radius:20px;">
+          <h3 style="text-align:center; margin-top:1.5rem; color:var(--primary); font-size:1.4rem;">Project Title 1</h3>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <h2 class="section-title">Get In Touch</h2>
+      <div class="contact-form fade-up">
+        <form action="https://formsubmit.co/abelyesfa5@gmail.com" method="POST">
+          <div class="form-group">
+            <input type="text" name="name" placeholder="Your Full Name" required>
+          </div>
+          <div class="form-group">
+            <input type="email" name="email" placeholder="Your Email Address" required>
+          </div>
+          <div class="form-group">
+            <textarea name="message" rows="6" placeholder="Your Message..." required></textarea>
+          </div>
+          <button type="submit" class="submit-btn">Send Message Now</button>
+          <input type="hidden" name="_captcha" value="false">
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="social-links">
+      <div class="social-item"><a href="#"><i class="fab fa-facebook"></i></a></div>
+      <div class="social-item"><a href="#"><i class="fab fa-github"></i></a></div>
+      <div class="social-item"><a href="#"><i class="fab fa-linkedin"></i></a></div>
+      <div class="social-item"><a href="#"><i class="fab fa-telegram"></i></a></div>
+    </div>
+    <p style="color:var(--primary); font-size:1.3rem; margin-top:2rem;">
+      © 2025 <strong>Abel Yesfa</strong>. All rights reserved.
+    </p>
+  </footer>
+
+  <script>
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        e.preventDefault();
+        document.querySelector(a.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.15 });
+    document.querySelectorAll('.section-title, .fade-up').forEach(el => observer.observe(el));
+
+    const progressObs = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.querySelectorAll('.progress').forEach(bar => {
+            const width = bar.parentElement.previousElementSibling.querySelector('span').textContent;
+            bar.style.width = width;
+          });
+        }
+      });
+    }, { threshold: 0.7 });
+    document.querySelectorAll('.card').forEach(card => progressObs.observe(card));
+  </script>
 </body>
 </html>
